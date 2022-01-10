@@ -21,7 +21,7 @@ class MailerController extends AbstractController
     {
         $email = (new Email())
             ->from('myasgallerydev@gmail.com')
-            ->to('thomas.biendicho@gmail.com')
+            ->to('morganetressens@gmail.com')
             ->subject('Création d\'un compte de gestionnaire')
             ->text('Félicitations ! Votre compte de gestionnaire de MyasGallery a bien été créé. Vous pouvez maintenant vous connecter au site via vos identifiants');
 

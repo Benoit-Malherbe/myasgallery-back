@@ -164,7 +164,7 @@ class Category
     public function getPictureUrl(): ?string
     {
         // we'll catch the picture with the entire associated url
-        $path = "http://ec2-3-83-182-226.compute-1.amazonaws.com/img/uploads/categories/";
+        $path = "http://localhost:8000/img/uploads/categories/";
         return $path . $this->pictureUrl;
     }
 

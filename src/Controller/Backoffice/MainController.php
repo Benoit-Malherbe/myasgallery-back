@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/backoffice/", name="backoffice_main_")
- * @IsGranted("ROLE_CATALOG_MANAGER")
+ * @IsGranted("ROLE_USER")
  */
 class MainController extends AbstractController
 {

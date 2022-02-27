@@ -193,7 +193,7 @@ class Artist
     public function getPhotoUrl(): ?string
     {
         // we'll catch the photo with the entire associated url
-        $path ="http://ec2-3-83-182-226.compute-1.amazonaws.com/img/uploads/artists/";
+        $path ="http://localhost:8000/img/uploads/artists/";
         return $path . $this->photoUrl;
     }
 

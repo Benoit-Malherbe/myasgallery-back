@@ -103,15 +103,11 @@ class Artwork
 
     /**
      * @ORM\Column(type="datetime_immutable")
-     * 
-     * 
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
-     * 
-     * 
      */
     private $updatedAt;
 
@@ -217,7 +213,7 @@ class Artwork
     public function getPictureUrl(): ?string
     {
         // we'll catch the picture with the entire associated url
-        $path = "http://ec2-3-83-182-226.compute-1.amazonaws.com/img/uploads/artworks/";
+        $path = "http://localhost:8000/img/uploads/artworks/";
         return $path . $this->pictureUrl;
     }
 

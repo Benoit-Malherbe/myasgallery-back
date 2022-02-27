@@ -122,6 +122,8 @@ class EventRepository extends ServiceEntityRepository
     {
         // We will use the DQL (Doctrine Query Language)
         $query = $this->createQueryBuilder('e')
+            ->where('e.date >= :now')
+            ->setParameter('now', new \DateTime('now'))
             ->orderBy('e.date', 'ASC')
             ->setMaxResults($limit)
             ->getQuery();

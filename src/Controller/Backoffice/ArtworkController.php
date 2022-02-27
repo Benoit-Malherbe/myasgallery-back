@@ -15,12 +15,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/backoffice/oeuvre/", name="backoffice_artwork_")
- * @IsGranted("ROLE_CATALOG_MANAGER")
  */
 class ArtworkController extends AbstractController
 {
     /**
      * @Route("", name="browse", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      */
     public function browse(ArtworkRepository $artworkRepository): Response
     {
@@ -34,6 +34,7 @@ class ArtworkController extends AbstractController
 
     /**
      * @Route("add", name="add", methods={"GET", "POST"})
+     * @IsGranted("ROLE_CATALOG_MANAGER")
      */
     public function add(Request $request): Response 
     {
@@ -61,6 +62,7 @@ class ArtworkController extends AbstractController
 
     /**
      * @Route("{slug}", name="read", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      */
     public function read(Artwork $artwork, ArtworkRepository $artworkRepository): Response
     {
@@ -74,6 +76,7 @@ class ArtworkController extends AbstractController
 
     /**
      * @Route("edit/{id}", name="edit", methods={"GET", "POST"}, requirements={"id"="\d+"})
+     * @IsGranted("ROLE_CATALOG_MANAGER")
      */
     public function edit(Request $request, Artwork $artwork): Response
     {
@@ -103,6 +106,7 @@ class ArtworkController extends AbstractController
 
     /**
      * @Route("delete/{id}", name="delete", methods={"GET"}, requirements={"id"="\d+"})
+     * @IsGranted("ROLE_CATALOG_MANAGER")
      */
     public function delete(Artwork $artwork, EntityManagerInterface $entityManager): Response 
     {

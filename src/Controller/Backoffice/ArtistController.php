@@ -15,12 +15,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/backoffice/artiste/", name="backoffice_artist_")
- * @IsGranted("ROLE_CATALOG_MANAGER")
  */
 class ArtistController extends AbstractController
 {
     /**
      * @Route("", name="browse", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      */
     public function browse(ArtistRepository $artistRepository): Response
     {
@@ -33,6 +33,7 @@ class ArtistController extends AbstractController
 
     /**
      * @Route("add", name="add", methods={"GET", "POST"})
+     * @IsGranted("ROLE_CATALOG_MANAGER")
      */
     public function add(Request $request): Response
     {
@@ -59,6 +60,7 @@ class ArtistController extends AbstractController
 
     /**
      * @Route("{slug}", name="read", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      */
     public function read(Artist $artist, ArtistRepository $artistRepository): Response
     {
@@ -72,6 +74,7 @@ class ArtistController extends AbstractController
 
     /**
      * @Route("edit/{id}", name="edit", methods={"GET", "POST"}, requirements={"id"="\d+"})
+     * @IsGranted("ROLE_CATALOG_MANAGER")
      */
     public function edit(Request $request,Artist $artist): Response
     {
@@ -97,8 +100,9 @@ class ArtistController extends AbstractController
     }
 
      /**
-     * @Route("delete/{id}", name="delete", methods={"GET"}, requirements={"id"="\d+"})
-     */
+      * @Route("delete/{id}", name="delete", methods={"GET"}, requirements={"id"="\d+"})
+      * @IsGranted("ROLE_CATALOG_MANAGER")
+      */
     public function delete(Artist $artist, EntityManagerInterface $entityManager): Response
     {
         $entityManager->remove($artist);

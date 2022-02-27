@@ -20,33 +20,51 @@ class ContactController extends AbstractController
     public function sendMessage(Request $request, MailerInterface $mailer): Response
     {
         $requestDatasArray = json_decode($request->getContent(), true);
+            // on vérifie que le champ pot de miel est vide
+                if(isset($requestDatasArray['pseudo']) && empty($requestDatasArray['pseudo']) && isset($requestDatasArray['email1']) && empty($requestDatasArray['email1'])){
+                    // on vérifie que tous les champs sont présents et remplis
+                    if(
+                        isset($requestDatasArray['lastname']) && !empty($requestDatasArray['lastname']) &&
+                        isset($requestDatasArray['firstname']) && !empty($requestDatasArray['firstname']) &&
+                        isset($requestDatasArray['company']) &&
+                        isset($requestDatasArray['email']) && !empty($requestDatasArray['email']) &&
+                        isset($requestDatasArray['phone']) && !empty($requestDatasArray['phone']) &&
+                        isset($requestDatasArray['messageObject']) && !empty($requestDatasArray['messageObject']) &&
+                        isset($requestDatasArray['message']) && !empty($requestDatasArray['message']) &&
+                        isset($requestDatasArray['pseudo']) && !empty($requestDatasArray['pseudo'])
+                    ){
+                        // on nettoie le contenu
+                        $lastname = strip_tags($requestDatasArray['lastname']);
+                        $firstname = strip_tags($requestDatasArray['firstname']);
+                        $company = strip_tags($requestDatasArray['company']);
+                        $mail = strip_tags($requestDatasArray['email']);
+                        $phone = strip_tags($requestDatasArray['phone']);
+                        $messageObject = strip_tags($requestDatasArray['messageObject']);
+                        $message = strip_tags($requestDatasArray['message']);
 
-        $lastname = $requestDatasArray['lastname'];
-        $firstname = $requestDatasArray['firstname'];
-        $company = $requestDatasArray['company'];
-        $mail = $requestDatasArray['email'];
-        $phone = $requestDatasArray['phone'];
-        $messageObject = $requestDatasArray['messageObject'];
-        $message = $requestDatasArray['message'];
+                        // envoie du mail
+                        $email = (new TemplatedEmail())
+                            ->from('myasgallerydev@gmail.com')
+                            ->to($mail)
+                            ->subject($messageObject)
+                            ->text($message)
+                            ->htmlTemplate('contact/index.html.twig')
+                            ->context([
+                                'firstname' => $firstname,
+                                'lastname' => $lastname,
+                                'messageObject' => $messageObject,
+                                'message' => $message,
+                                'company' => $company,
+                                'phone' => $phone,
+                                'mail' => $mail
+                            ]);
 
-        $email = (new TemplatedEmail())
-            ->from('myasgallerydev@gmail.com')
-            ->to($mail, 'thomas.biendicho@gmail.com')
-            ->subject($messageObject)
-            ->text($message)
-            ->htmlTemplate('contact/index.html.twig')
-            ->context([
-                'firstname' => $firstname,
-                'lastname' => $lastname,
-                'messageObject' => $messageObject,
-                'message' => $message,
-                'company' => $company,
-                'phone' => $phone,
-                'mail' => $mail
-            ]);
+                        $mailer->send($email);
 
-        $mailer->send($email);
-
-        return $this->json('all data sent successfully', 200);
+                        return $this->json('all data sent successfully', 200);
+                    }
+                }else{
+                    return $this->json('forbidden', 403);
+                }
     }
 }

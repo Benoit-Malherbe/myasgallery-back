@@ -15,12 +15,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/backoffice/categorie/", name="backoffice_category_")
- * @IsGranted("ROLE_CATALOG_MANAGER")
  */
 class CategoryController extends AbstractController
 {
     /**
      * @Route("", name="browse", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      */
     public function browse(CategoryRepository $categoryRepository): Response
     {
@@ -34,6 +34,7 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("add", name="add", methods={"GET", "POST"})
+     * @IsGranted("ROLE_CATALOG_MANAGER")
      */
     public function add(Request $request): Response
     {
@@ -60,6 +61,7 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("{slug}", name="read", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      */
     public function read(Category $category, CategoryRepository $categoryRepository): Response
     {
@@ -72,6 +74,7 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("edit/{id}", name="edit", methods={"GET", "POST"}), requirements={"id"="\d+"})
+     * @IsGranted("ROLE_CATALOG_MANAGER")
      */
     public function edit(Request $request,Category $category): Response
     {
@@ -98,6 +101,7 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("delete/{id}", name="delete", methods={"GET"}, requirements={"id"="\d+"})
+     * @IsGranted("ROLE_CATALOG_MANAGER")
      */
     public function delete(Category $category, EntityManagerInterface $entityManager): Response
     {

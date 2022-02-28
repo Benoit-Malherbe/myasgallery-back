@@ -45,22 +45,12 @@ class SearchController extends AbstractController
         
         if ($user == null) {
             return $this->redirectToRoute("login");
-        }
-        if ($artwork) {
-            return $this->render('backoffice/artwork/browse.html.twig', [
+        } else if ($artwork || $artist || $category || $event) {
+            return $this->render('backoffice/search/browse.html.twig', [
             'artwork_list' => $artwork,
-            ]);
-        } elseif ($artist) {
-            return $this->render('backoffice/artist/browse.html.twig', [
             'artist_list' => $artist,
-            ]);
-        } elseif ($category) {
-            return $this->render('backoffice/category/browse.html.twig', [
             'category_list' => $category,
-            ]);
-        } elseif ($event) {
-            return $this->render('backoffice/event/browse.html.twig', [
-            'event_list' => $event,
+            'event_list' => $event
             ]);
         } else {
             $this->addFlash('danger', 'Aucun résultat trouvé pour la recherche : ' . "{$request->query->get("search")}");
